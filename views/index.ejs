@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
+</head>
+<body>
+     
+
+     <button type="submit" id="get-weather-button" onclick="getWeather()">Get Weather</button>
+     
+     <div class="weather-card">
+       
+      <% if(locals.content) {%> 
+        <div class="card">
+          <div class="card1">
+            <div class="city">
+                <div class="city-name">
+                <h2><%= content.name %></h2>
+                </div>
+                <div>
+                <img src="images/location.png" alt="" height="50px" width="40px" style="margin-left:10px ;">
+                </div>
+            </div>
+
+            <div class="icon">
+                 
+                <img src="icons/<%= content.weather[0].icon %>.png" alt="weather icon">
+            </div>
+        </div>
+
+         <div class="mid">
+            <div class="description">
+                <h3>"<%= content.weather[0].description %>"</h3>
+            </div>
+            
+         </div>
+
+         <div class="card2">
+            
+              <h1 class="temp-value"><%=content.main.temp %> &deg C</h1>
+            
+        </div>
+          
+         </div>
+        
+        <% } else{%>
+    
+          <p>not working</p>
+        <% } %>
+       
+     </div>
+
+<script>
+
+function getWeather(){
+     
+if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition((position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        
+        fetch('/send-location', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ latitude, longitude }),
+        })
+        .then((response) => {
+            if (response.ok) {
+                console.log('Location sent to server successfully.');
+                location.reload();
+            } else {
+                console.error('Failed to send location to server.');
+            }
+            
+        })
+        .catch((error) => {
+            console.error('Error sending location:', error);
+        });
+    }, (error) => {
+        console.error('Error getting location:', error);
+    });
+} else {
+    console.error('Geolocation is not available in this browser.');
+}
+
+
+
+}
+  
+
+
+     </script>
+</body>
+</html>
