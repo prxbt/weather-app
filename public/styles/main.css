@@ -7,7 +7,7 @@ body{
     background-image: url(../images/e1yh_e7nt_161228.jpg);
 }
 
-button{
+#get-weather-button{
     background-color: #F5F5F5;
     border-radius: 5px;
     border: none;
@@ -84,4 +84,15 @@ button{
     font-size: 25px;
     color: #4C4C6D;
 
+}
+
+#city-input , #city-submit{
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin-right: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #793FDF;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }

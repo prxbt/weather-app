@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import axios from 'axios';
 
 const app = express();
-const port = 3000;
+const port = 3001;
 const key = "82005d27a116c2880c8f0fcb866998a0";
 
 app.use(bodyParser.json());
@@ -45,6 +45,19 @@ app.post('/send-location', async (req, res) => {
 app.get('/weather', (req, res) => {
   res.render('index.ejs', { content: currentWeather });
   console.log(currentWeather);
+});
+
+app.post('/city-weather', async (req, res) => {
+  try {
+    console.log(req.body);
+    const { city } = req.body;
+    const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&units=metric`);
+    currentWeather=response.data;
+    res.redirect('/weather');
+  } catch (error) {
+    console.error('Error sending location or fetching weather data:', error);
+    res.status(500).send('Error sending location or fetching weather data');
+  }
 });
 
 app.listen(port, () => {

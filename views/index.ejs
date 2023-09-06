@@ -9,8 +9,17 @@
 <body>
      
 
-     <button type="submit" id="get-weather-button" onclick="getWeather()">Get Weather</button>
+     <button type="submit" id="get-weather-button" onclick="getWeather()">Click to Get Weather</button>
+
+      <h2 > or</h2>
      
+      <form id="cityForm" action="/city-weather" method="post">
+       
+        <input type="text" placeholder='Enter city name' id="city-input" name="city" required>
+        <button type="submit" id="city-submit">Submit</button>
+      </form>
+     
+     <% if(locals.content) { %>
      <div class="weather-card">
        
       <% if(locals.content) {%> 
@@ -52,6 +61,8 @@
         <% } %>
        
      </div>
+
+        <% } %>
 
 <script>
 
